@@ -169,7 +169,7 @@ private fun FoodEntryCard(entry: FoodEntry, dateFormat: SimpleDateFormat) {
                     color = MaterialTheme.colorScheme.primary,
                 )
                 Text(
-                    text = "P${entry.proteinG.toInt()} C${entry.carbsG.toInt()} F${entry.fatG.toInt()}",
+                    text = "${entry.proteinG.toInt()}g protein · ${entry.carbsG.toInt()}g carbs · ${entry.fatG.toInt()}g fat",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
