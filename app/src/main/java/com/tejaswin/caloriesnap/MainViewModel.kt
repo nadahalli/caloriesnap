@@ -1,5 +1,6 @@
 package com.tejaswin.caloriesnap
 
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,7 +21,11 @@ enum class ModelState { NOT_READY, DOWNLOADING, READY, ERROR }
 class MainViewModel(
     private val analyzer: FoodAnalyzer,
     private val repository: FoodRepository,
+    private val prefs: SharedPreferences,
 ) : ViewModel() {
+
+    private val _setupCompleted = MutableStateFlow(prefs.getBoolean(KEY_SETUP_COMPLETED, false))
+    val setupCompleted: StateFlow<Boolean> = _setupCompleted.asStateFlow()
 
     private val _modelState = MutableStateFlow(ModelState.NOT_READY)
     val modelState: StateFlow<ModelState> = _modelState.asStateFlow()
@@ -143,6 +148,11 @@ class MainViewModel(
         }
     }
 
+    fun markSetupCompleted() {
+        prefs.edit().putBoolean(KEY_SETUP_COMPLETED, true).apply()
+        _setupCompleted.value = true
+    }
+
     fun clearCapture() {
         _capturedBitmap.value = null
         _capturedPhotoPath.value = null
@@ -153,5 +163,9 @@ class MainViewModel(
     override fun onCleared() {
         super.onCleared()
         analyzer.close()
+    }
+
+    companion object {
+        private const val KEY_SETUP_COMPLETED = "setup_completed"
     }
 }

@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -65,18 +64,18 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun CalorieSnapApp(viewModel: MainViewModel) {
+    val setupCompleted by viewModel.setupCompleted.collectAsState()
     val modelState by viewModel.modelState.collectAsState()
     val modelError by viewModel.modelError.collectAsState()
     val downloadProgress by viewModel.downloadProgress.collectAsState()
-    var setupDismissed by remember { mutableStateOf(false) }
 
-    if (!setupDismissed) {
+    if (!setupCompleted) {
         SetupScreen(
             modelState = modelState,
             errorMessage = modelError,
             downloadProgress = downloadProgress,
             onDownload = viewModel::downloadModel,
-            onContinue = { setupDismissed = true },
+            onContinue = viewModel::markSetupCompleted,
         )
         return
     }

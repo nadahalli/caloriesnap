@@ -18,6 +18,7 @@ class MainViewModelFactory(private val context: Context) : ViewModelProvider.Fac
             onDevice = CalorieEstimator(),
             cloud = FirebaseAnalyzer(),
         )
-        return MainViewModel(analyzer, repository) as T
+        val prefs = context.getSharedPreferences("calorie_snap_prefs", Context.MODE_PRIVATE)
+        return MainViewModel(analyzer, repository, prefs) as T
     }
 }

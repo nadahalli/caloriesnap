@@ -1,5 +1,6 @@
 package com.tejaswin.caloriesnap
 
+import android.content.Context
 import android.graphics.Bitmap
 import com.tejaswin.caloriesnap.data.DownloadProgress
 import com.tejaswin.caloriesnap.data.FoodAnalyzer
@@ -23,6 +24,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
@@ -39,7 +41,10 @@ class MainViewModelTest {
         Dispatchers.setMain(testDispatcher)
         fakeAnalyzer = FakeFoodAnalyzer()
         fakeRepository = FakeFoodRepository()
-        viewModel = MainViewModel(fakeAnalyzer, fakeRepository)
+        val prefs = RuntimeEnvironment.getApplication()
+            .getSharedPreferences("test_prefs", Context.MODE_PRIVATE)
+        prefs.edit().clear().apply()
+        viewModel = MainViewModel(fakeAnalyzer, fakeRepository, prefs)
     }
 
     @After
