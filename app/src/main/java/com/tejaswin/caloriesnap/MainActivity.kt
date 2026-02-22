@@ -86,7 +86,7 @@ private fun CalorieSnapApp(viewModel: MainViewModel) {
     val estimate by viewModel.estimate.collectAsState()
     val isAnalyzing by viewModel.isAnalyzing.collectAsState()
     val selectedExtras by viewModel.selectedExtras.collectAsState()
-    val todayEntries by viewModel.todayEntries.collectAsState()
+    val allEntries by viewModel.allEntries.collectAsState()
 
     Scaffold(
         bottomBar = {
@@ -137,7 +137,7 @@ private fun CalorieSnapApp(viewModel: MainViewModel) {
                         )
                     }
                 }
-                1 -> HistoryScreen(entries = todayEntries)
+                1 -> HistoryScreen(entries = allEntries)
             }
         }
     }

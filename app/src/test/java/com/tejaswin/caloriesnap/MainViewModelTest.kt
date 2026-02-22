@@ -144,6 +144,8 @@ class FakeFoodRepository : FoodRepository {
 
     override fun getEntriesForDay(startOfDay: Long, endOfDay: Long): Flow<List<FoodEntry>> = entries
 
+    override fun getAllEntries(): Flow<List<FoodEntry>> = entries
+
     override suspend fun deleteById(id: Int) {
         entries.value = entries.value.filter { it.id != id }
     }

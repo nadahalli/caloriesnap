@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.util.Calendar
 
 enum class ModelState { NOT_READY, DOWNLOADING, READY, ERROR }
 
@@ -85,19 +84,10 @@ class MainViewModel(
     private val _selectedExtras = MutableStateFlow<Set<String>>(emptySet())
     val selectedExtras: StateFlow<Set<String>> = _selectedExtras.asStateFlow()
 
-    // Today's entries
-    val todayEntries: StateFlow<List<FoodEntry>> = run {
-        val cal = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-        val startOfDay = cal.timeInMillis
-        val endOfDay = startOfDay + 86_400_000L
-        repository.getEntriesForDay(startOfDay, endOfDay)
+    // All entries (sorted by timestamp desc from DAO)
+    val allEntries: StateFlow<List<FoodEntry>> =
+        repository.getAllEntries()
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
-    }
 
     fun onPhotoCaptured(bitmap: Bitmap, photoPath: String) {
         _capturedBitmap.value = bitmap
