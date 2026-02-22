@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "855239428495",
+    "project_id": "caloriesnap-63245",
+    "storage_bucket": "caloriesnap-63245.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855239428495:android:91fcf8691f20ce33cea3fa",
+        "android_client_info": {
+          "package_name": "com.tejaswin.caloriesnap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZp6hj6Vv_TvsbMBmK_ID3MssD9sFDHhs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

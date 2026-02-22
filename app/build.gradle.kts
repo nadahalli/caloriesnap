@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -42,12 +43,19 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
     // Gemini Nano on-device via ML Kit Prompt API
     implementation("com.google.mlkit:genai-prompt:1.0.0-beta1")
+
+    // Firebase AI Logic (cloud fallback)
+    implementation(platform("com.google.firebase:firebase-bom:34.9.0"))
+    implementation("com.google.firebase:firebase-ai")
+    implementation("com.google.firebase:firebase-appcheck-playintegrity")
+    implementation("com.google.firebase:firebase-appcheck-debug")
 
     // CameraX
     implementation("androidx.camera:camera-camera2:1.4.1")
